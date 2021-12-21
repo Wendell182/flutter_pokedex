@@ -21,8 +21,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
+        body: CustomScrollView(
+      slivers: [
         DetailAppBarWidget(
           pokemom: pokemom,
           onBack: onBack,
@@ -34,6 +34,18 @@ class DetailPage extends StatelessWidget {
           onChangePokemom: onChangePokemom,
         )
       ],
-    ));
+    )
+
+        /*  body: Stack(
+      children: [
+        DetailAppBarWidget(
+          pokemom: pokemom,
+          onBack: onBack,
+        ),
+       
+      ],
+    ) */
+
+        );
   }
 }

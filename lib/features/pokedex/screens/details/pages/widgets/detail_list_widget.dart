@@ -17,11 +17,7 @@ class DetailListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 84,
-      left: 0,
-      right: 0,
-      height: 350,
+    return SliverToBoxAdapter(
       child: Container(
         color: pokemom.baseColor,
         child: Column(
@@ -53,7 +49,7 @@ class DetailListWidget extends StatelessWidget {
               ),
             ),
             SizedBox(
-                height: 200,
+                height: 300,
                 width: double.infinity,
                 child: PageView(
                   onPageChanged: (index) =>
@@ -63,27 +59,28 @@ class DetailListWidget extends StatelessWidget {
                   children: list
                       .map((e){ 
                         bool dif = e.name != pokemom.name;
-                        return  AnimatedOpacity(
-                        duration: Duration(milliseconds: 200),
-                        opacity: dif ? 0.4 : 1.0 ,
-                        child: TweenAnimationBuilder<double>(
+                        return  Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AnimatedOpacity(
                           duration: Duration(milliseconds: 200),
-                          curve: Curves.easeIn,
-                          tween: Tween<double>(
-                            begin: dif ? 300 : 150,
-                            end:  dif? 150 : 300),
-                          builder: (context,value,child) {
-                            return Center(
-                              child: Image.network(
+                          opacity: dif ? 0.4 : 1.0 ,
+                          child: TweenAnimationBuilder<double>(
+                            duration: Duration(milliseconds: 200),
+                            curve: Curves.easeIn,
+                            tween: Tween<double>(
+                              begin: dif ? 300 : 150,
+                              end:  dif? 150 : 300),
+                            builder: (context,value,child) {
+                              return Image.network(
                                     e.image,
                                     width: value,
                                     fit:  BoxFit.contain,
                                     color:  dif ? Colors.black.withOpacity(0.4) : null,
-                                  ),
-                            );
-                          }, 
-                        ),
-                      );}
+                                  );
+                            }, 
+                          ),
+                                              ),
+                        );}
                     )
                       .toList(),
                 ))
