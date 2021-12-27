@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/commom/models/pokemom.dart';
 
+import 'detail_item_list_widget.dart';
+
 class DetailListWidget extends StatelessWidget {
   const DetailListWidget(
       {Key? key,
@@ -21,7 +23,6 @@ class DetailListWidget extends StatelessWidget {
       child: Container(
         color: pokemom.baseColor,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -52,37 +53,15 @@ class DetailListWidget extends StatelessWidget {
                 height: 300,
                 width: double.infinity,
                 child: PageView(
-                  onPageChanged: (index) =>
-                    onChangePokemom(list[index])
-                  ,
+                  onPageChanged: (index) => onChangePokemom(list[index]),
                   controller: controller,
-                  children: list
-                      .map((e){ 
-                        bool dif = e.name != pokemom.name;
-                        return  Align(
-                          alignment: Alignment.bottomCenter,
-                          child: AnimatedOpacity(
-                          duration: Duration(milliseconds: 200),
-                          opacity: dif ? 0.4 : 1.0 ,
-                          child: TweenAnimationBuilder<double>(
-                            duration: Duration(milliseconds: 200),
-                            curve: Curves.easeIn,
-                            tween: Tween<double>(
-                              begin: dif ? 300 : 150,
-                              end:  dif? 150 : 300),
-                            builder: (context,value,child) {
-                              return Image.network(
-                                    e.image,
-                                    width: value,
-                                    fit:  BoxFit.contain,
-                                    color:  dif ? Colors.black.withOpacity(0.4) : null,
-                                  );
-                            }, 
-                          ),
-                                              ),
-                        );}
-                    )
-                      .toList(),
+                  children: list.map((e) {
+                    bool dif = e.name != pokemom.name;
+                    return DetailItemListWidget(
+                      isDiff: dif,
+                      pokemom: e,
+                    );
+                  }).toList(),
                 ))
           ],
         ),
